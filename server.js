@@ -3,7 +3,7 @@ const axios = require("axios");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 10000;
 
 app.use(cors());
 
@@ -11,7 +11,7 @@ app.get("/api/dapi/restaurants/list/v5", async (req, res) => {
     try {
         const { lat, lng } = req.query;
         const response = await axios.get(
-            `https://www.swiggy.com/api/dapi/restaurants/list/v5`,
+            "https://www.swiggy.com/api/dapi/restaurants/list/v5",
             {
                 params: {
                     lat,
@@ -23,7 +23,8 @@ app.get("/api/dapi/restaurants/list/v5", async (req, res) => {
         );
         res.json(response.data);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("Error fetching data from Swiggy API:", error.message);
+        res.status(500).json({ error: "Failed to fetch data from Swiggy API" });
     }
 });
 
